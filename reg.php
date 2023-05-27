@@ -6,6 +6,7 @@ ini_set('display_errors', 'On');
 //Подключаемся к базе через файл connect.php
 require ('./connect.php');
 
+//@ - собачка нужна чтобы экранировать ошибки если переменная не передана по каким либо причинам
 $login = @$_POST['login'];
 $email = @$_POST['email'];
 
