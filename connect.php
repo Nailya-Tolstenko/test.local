@@ -11,7 +11,7 @@ try {
 	//$dbh - это наша ссылка на подключение к БАЗЕ
     $dbh = new PDO("mysql:host=$host;dbname=$db", $user, $password);
 } catch(PDOException $e) {
-	//Иначе выводим ошибяку
+	//Иначе выводим ошибку
     echo $e->getMessage();
 }
 
