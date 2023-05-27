@@ -37,16 +37,44 @@ echo '<br />'; */
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <script src="http://ajax.googlleapis.com/ajax/libs/jquery/1.7/.1/jqery.min.js">
+
+    </script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js">
+    </script>
 </head>
 
 <body>
 <form action="./reg.php" method="post" style="text-align:center; margin-top:100px">
 
-<input type="text" name="login" placeholder="Введите логин">
-<input type="email" name="email" placeholder="Введите email">
-<input type="submit" value="Зарегистрироваться">
+<input type="text" name="login" id="login" placeholder="Введите логин">
+<input type="email" name="email" id="email" placeholder="Введите email">
+<input type="submit" id="btn" value="Зарегистрироваться">
 
 </form>
+
+<div id="mes"></div>
+
+<script>
+$ (DOCUMENT) .on('click','#btn', function(e) {
+    e.preventDefault()
+
+
+var login=$('#login').val();
+var email=$('#email').val();
+    $ajax( {
+        url: '/reg.php',
+        data:{'login':login, 'email':email},
+        dataType: "html", 
+        metod: "post",
+        success:function(data){
+            $('#mes').htm(data);
+        },
+    });
+});
+
+
+    </script>
 
 </body>
 </html>

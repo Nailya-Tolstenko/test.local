@@ -6,8 +6,44 @@ ini_set('display_errors', 'On');
 //Подключаемся к базе через файл connect.php
 require ('./connect.php');
 
-$login = @$_POST['login'];
+$login = @$_POST['login'];  //@ нужна чтобы экранировать ошибки если $ не переданна по каким-либо причинам.
 $email = @$_POST['email'];
+
+
+
+$main="SELECT email FROM users WHERE email='$email'";
+$row=$pdo->query($main);
+$user=$row->fetch(PDO::FETCH_ASSOS);
+
+if( !empty($user["email"])){
+	echo "Такой email уже сущуствует"
+}
+
+else {
+	 //Сохраняем запрос в переменную $sql
+	 $sql = "INSERT INTO users(`login`, `email`, `password`) VALUES('$login', '$email', '$password')";
+
+	 //Получаем количество выполненных запросов
+	 $res = $dbh->exec($sql);
+ 
+		//Проверяем работает запрос или нет
+	 if ($res) {
+		 echo 'Вы зарегистрировались под номером #' . $res;
+	 } else {
+		 //Если нет то выводим ошибку
+		 //$dbh->errorInfo() - это массив с ошибками
+		 throw new Exception('Запрос не выполнен - ' . print_r($dbh->errorInfo(), true));
+	 }
+	 
+ } catch(PDOException $e) {
+	 //В этот блок у нас попадают ошибки
+	 echo $e->getMessage();
+ }
+
+
+
+
+
 
 //Если пустая переменная login тогда говорим ввести логин
 //Если пустой Email тогда говорим ввести Email
@@ -23,8 +59,8 @@ try {
 	//md5 превращает наш пароль в хэш так как пароль в базе нельзя хранить в исходном виде
 	//только в зашифрованном
 	$password = md5(random_bytes(10));
-
-    //Сохраняем запрос в переменную $sql
+}
+/*    //Сохраняем запрос в переменную $sql
 	$sql = "INSERT INTO users(`login`, `email`, `password`) VALUES('$login', '$email', '$password')";
 
     //Получаем количество выполненных запросов
@@ -43,5 +79,4 @@ try {
 	//В этот блок у нас попадают ошибки
     echo $e->getMessage();
 }
-
-
+*/
